@@ -1,9 +1,67 @@
+"use client"
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, HandHeart } from 'lucide-react';
+import { Menu, HandHeart, LogOut } from 'lucide-react';
+import { useAuth } from '@/context/auth-context';
+import { useRouter } from 'next/navigation';
 
 export function Header() {
+  const { user, userProfile, logout } = useAuth();
+  const router = useRouter();
+
+  const handleDashboardRedirect = () => {
+      if(userProfile?.role === 'organization') {
+          router.push('/organization/dashboard');
+      } else if (userProfile?.role === 'volunteer') {
+          router.push('/volunteer/dashboard');
+      }
+  }
+
+  const loggedOutNav = (
+    <>
+      <Button variant="ghost" asChild>
+        <Link href="/login">Log In</Link>
+      </Button>
+      <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
+        <Link href="/register">Sign Up</Link>
+      </Button>
+    </>
+  );
+
+  const loggedInNav = (
+    <>
+      <Button variant="ghost" onClick={handleDashboardRedirect}>Dashboard</Button>
+      <Button onClick={logout}>
+          <LogOut className="mr-2" />
+          Logout
+      </Button>
+    </>
+  );
+  
+  const loggedOutMobileNav = (
+    <div className="flex flex-col space-y-2 pt-4">
+        <Button variant="outline" asChild>
+            <Link href="/login">Log In</Link>
+        </Button>
+        <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
+            <Link href="/register">Sign Up</Link>
+        </Button>
+    </div>
+  )
+
+  const loggedInMobileNav = (
+     <div className="flex flex-col space-y-2 pt-4">
+        <Button variant="outline" onClick={handleDashboardRedirect}>Dashboard</Button>
+        <Button onClick={logout}>
+            <LogOut className="mr-2" />
+            Logout
+        </Button>
+    </div>
+  )
+
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
@@ -36,14 +94,7 @@ export function Header() {
                 <nav className="flex flex-col space-y-2">
                   <Link href="/#opportunities">Opportunities</Link>
                 </nav>
-                <div className="flex flex-col space-y-2 pt-4">
-                    <Button variant="outline" asChild>
-                        <Link href="/login">Log In</Link>
-                    </Button>
-                    <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                        <Link href="/register">Sign Up</Link>
-                    </Button>
-                </div>
+                {user ? loggedInMobileNav : loggedOutMobileNav}
               </div>
             </SheetContent>
           </Sheet>
@@ -59,12 +110,7 @@ export function Header() {
 
         <div className="flex items-center justify-end space-x-4">
           <nav className="hidden md:flex items-center space-x-2">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Log In</Link>
-            </Button>
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-              <Link href="/register">Sign Up</Link>
-            </Button>
+            { user ? loggedInNav : loggedOutNav }
           </nav>
         </div>
       </div>

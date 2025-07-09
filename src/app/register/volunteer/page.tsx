@@ -13,6 +13,11 @@ import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
+import { createUserWithEmailAndPassword } from "firebase/auth"
+import { doc, setDoc } from "firebase/firestore"
+import { auth, db } from "@/lib/firebase"
+import { useAuth } from "@/context/auth-context"
+
 
 const formSchema = z.object({
   fullName: z.string().min(2, { message: "Full name must be at least 2 characters." }),
@@ -25,6 +30,7 @@ const formSchema = z.object({
 export default function VolunteerRegistrationPage() {
   const { toast } = useToast()
   const router = useRouter()
+  const { firebaseInitialized } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,13 +42,35 @@ export default function VolunteerRegistrationPage() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-    toast({
-      title: "Registration Successful!",
-      description: "Welcome to HelpingHands! Redirecting to your dashboard.",
-    })
-    router.push('/volunteer/dashboard');
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!firebaseInitialized || !auth || !db) {
+        toast({
+            variant: "destructive",
+            title: "Error",
+            description: "Firebase is not configured correctly.",
+        });
+        return;
+    }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        email: values.email,
+        fullName: values.fullName,
+        skills: values.skills,
+        interests: values.interests,
+        role: 'volunteer'
+      });
+      
+      router.push('/volunteer/dashboard');
+    } catch (error: any) {
+       toast({
+        variant: "destructive",
+        title: "Registration Failed",
+        description: error.message,
+      })
+    }
   }
 
   return (
@@ -122,8 +150,8 @@ export default function VolunteerRegistrationPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-                  Create Account
+                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" disabled={form.formState.isSubmitting || !firebaseInitialized}>
+                  {form.formState.isSubmitting ? 'Creating Account...' : 'Create Account'}
                 </Button>
               </form>
             </Form>

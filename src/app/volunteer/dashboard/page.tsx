@@ -1,25 +1,42 @@
+"use client"
+
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { OpportunityList } from '@/components/opportunity-list';
 import { Input } from '@/components/ui/input';
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar";
-import Link from 'next/link';
 import {
     Search,
-    Bell,
-    MessageSquare,
-    UserCircle,
-    Settings,
-    LogOut,
     Users,
     Heart,
     Calendar,
     Star
 } from 'lucide-react';
+import { useAuth } from '@/context/auth-context';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function VolunteerDashboardPage() {
+    const { userProfile, loading } = useAuth();
+    
+    if (loading || !userProfile) {
+        return (
+            <div className="flex flex-col min-h-screen bg-background">
+                <Header />
+                <main className="flex-1 bg-muted/20 p-4 md:p-8 lg:p-10">
+                    <div className="container mx-auto">
+                        <Skeleton className="h-12 w-1/3 mb-8" />
+                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+                            {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-32" />)}
+                        </div>
+                        <Skeleton className="h-10 w-1/4 mb-4" />
+                        <Skeleton className="h-64 w-full" />
+                    </div>
+                </main>
+                <Footer />
+            </div>
+        )
+    }
+
     return (
         <div className="flex flex-col min-h-screen bg-background">
             <Header />
@@ -28,48 +45,11 @@ export default function VolunteerDashboardPage() {
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
                         <div>
                             <h1 className="text-3xl font-bold font-headline">Your Dashboard</h1>
-                            <p className="text-muted-foreground">Welcome back, Alex!</p>
+                            <p className="text-muted-foreground">Welcome back, {userProfile.fullName}!</p>
                         </div>
-                        <div className="flex items-center gap-2">
-                             <div className="relative">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                                <Input placeholder="Search opportunities..." className="pl-10 w-full sm:w-64" />
-                            </div>
-                            <Menubar>
-                                <MenubarMenu>
-                                    <MenubarTrigger asChild>
-                                    <Button variant="outline" size="icon">
-                                        <UserCircle className="h-5 w-5" />
-                                    </Button>
-                                    </MenubarTrigger>
-                                    <MenubarContent align="end">
-                                        <MenubarItem>
-                                            <UserCircle className="mr-2" />
-                                            <span>My Profile</span>
-                                        </MenubarItem>
-                                        <MenubarItem>
-                                            <Bell className="mr-2" />
-                                            <span>Notifications</span>
-                                        </MenubarItem>
-                                        <MenubarItem>
-                                            <MessageSquare className="mr-2" />
-                                            <span>Messages</span>
-                                        </MenubarItem>
-                                        <MenubarSeparator />
-                                         <MenubarItem>
-                                            <Settings className="mr-2" />
-                                            <span>Settings</span>
-                                        </MenubarItem>
-                                        <MenubarSeparator />
-                                        <MenubarItem asChild>
-                                            <Link href="/login">
-                                                <LogOut className="mr-2" />
-                                                <span>Log Out</span>
-                                            </Link>
-                                        </MenubarItem>
-                                    </MenubarContent>
-                                </MenubarMenu>
-                            </Menubar>
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                            <Input placeholder="Search opportunities..." className="pl-10 w-full sm:w-64" />
                         </div>
                     </div>
 
