@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { OpportunityCard, type Opportunity } from '@/components/opportunity-card';
 import { Input } from '@/components/ui/input';
-import { MenuBar, MenuBarContent, MenuBarItem, MenuBarMenu, MenuBarSeparator, MenuBarTrigger } from "@/components/ui/menubar";
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar";
 import Link from 'next/link';
 import {
     PlusCircle,
@@ -41,41 +41,41 @@ export default function OrganizationDashboardPage() {
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                                 <Input placeholder="Search volunteers by skill..." className="pl-10 w-full sm:w-64" />
                             </div>
-                            <MenuBar>
-                                <MenuBarMenu>
-                                    <MenuBarTrigger asChild>
+                            <Menubar>
+                                <MenubarMenu>
+                                    <MenubarTrigger asChild>
                                     <Button variant="outline" size="icon">
                                         <UserCircle className="h-5 w-5" />
                                     </Button>
-                                    </MenuBarTrigger>
-                                    <MenuBarContent align="end">
-                                        <MenuBarItem>
+                                    </MenubarTrigger>
+                                    <MenubarContent align="end">
+                                        <MenubarItem>
                                             <UserCircle className="mr-2" />
                                             <span>My Profile</span>
-                                        </MenuBarItem>
-                                        <MenuBarItem>
+                                        </MenubarItem>
+                                        <MenubarItem>
                                             <Bell className="mr-2" />
                                             <span>Notifications</span>
-                                        </MenuBarItem>
-                                        <MenuBarItem>
+                                        </MenubarItem>
+                                        <MenubarItem>
                                             <MessageSquare className="mr-2" />
                                             <span>Chat</span>
-                                        </MenuBarItem>
-                                        <MenuBarSeparator />
-                                         <MenuBarItem>
+                                        </MenubarItem>
+                                        <MenubarSeparator />
+                                         <MenubarItem>
                                             <Settings className="mr-2" />
                                             <span>Settings</span>
-                                        </MenuBarItem>
-                                        <MenuBarSeparator />
-                                        <MenuBarItem asChild>
+                                        </MenubarItem>
+                                        <MenubarSeparator />
+                                        <MenubarItem asChild>
                                             <Link href="/login">
                                                 <LogOut className="mr-2" />
                                                 <span>Log Out</span>
                                             </Link>
-                                        </MenuBarItem>
-                                    </MenuBarContent>
-                                </MenuBarMenu>
-                            </MenuBar>
+                                        </MenubarItem>
+                                    </MenubarContent>
+                                </MenubarMenu>
+                            </Menubar>
                         </div>
                     </div>
 
