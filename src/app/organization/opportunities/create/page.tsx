@@ -49,13 +49,15 @@ export default function CreateOpportunityPage() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    // In a real app, you would add the new opportunity to your database.
-    // For this prototype, we'll just show a success message.
+    // In a real app, you would add the new opportunity to your database
+    // and get back the new opportunity's ID.
+    // For this prototype, we'll simulate this by redirecting to a pre-defined opportunity.
+    const newOpportunityId = 8;
     toast({
       title: "Opportunity Created!",
       description: "Your new volunteer opportunity has been posted.",
     })
-    router.push('/organization/dashboard');
+    router.push(`/opportunities/${newOpportunityId}`);
   }
 
   return (

@@ -24,6 +24,7 @@ import {
 const organizationOpportunities: Opportunity[] = [
     { id: 2, title: 'Youth Mentor', organization: 'Future Leaders Initiative', location: 'Oakland', description: 'Guide and support high school students, providing academic help and career advice.', category: 'Education' },
     { id: 7, title: 'Coding Bootcamp Instructor', organization: 'Future Leaders Initiative', location: 'Oakland', description: 'Teach the next generation of software developers in our intensive coding bootcamp.', category: 'Education' },
+    { id: 8, title: 'Guest Speaker for Tech Talk', organization: 'Future Leaders Initiative', location: 'Oakland', description: 'Share your industry experience with aspiring tech professionals. We are looking for guest speakers for our weekly tech talks.', category: 'Education' },
 ];
 
 export default function OrganizationDashboardPage() {
