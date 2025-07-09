@@ -6,8 +6,18 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const handleLogin = (event: React.FormEvent) => {
+    event.preventDefault();
+    // In a real app, you would handle authentication here.
+    // For this prototype, we'll simply redirect to the dashboard.
+    router.push('/organization/dashboard');
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
@@ -18,7 +28,7 @@ export default function LoginPage() {
             <CardDescription>Log in to your HelpingHands account.</CardDescription>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleLogin}>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="m@example.com" required />
