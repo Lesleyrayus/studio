@@ -2,7 +2,8 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { OpportunityCard, type Opportunity } from '@/components/opportunity-card';
+import { OpportunityCard } from '@/components/opportunity-card';
+import type { Opportunity } from '@/data/opportunities';
 import { Input } from '@/components/ui/input';
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar";
 import Link from 'next/link';
@@ -125,9 +126,11 @@ export default function OrganizationDashboardPage() {
                     <div>
                         <div className="flex items-center justify-between mb-4">
                              <h2 className="text-2xl font-bold font-headline">Your Posted Opportunities</h2>
-                             <Button>
-                                <PlusCircle className="mr-2 h-4 w-4" />
-                                Create New Opportunity
+                             <Button asChild>
+                                <Link href="/organization/opportunities/create">
+                                    <PlusCircle className="mr-2 h-4 w-4" />
+                                    Create New Opportunity
+                                </Link>
                             </Button>
                         </div>
                        
@@ -141,9 +144,11 @@ export default function OrganizationDashboardPage() {
                             <div className="text-center py-16 border-2 border-dashed rounded-lg bg-card">
                                 <h3 className="text-xl font-semibold font-headline">No Opportunities Posted</h3>
                                 <p className="text-muted-foreground mt-2 mb-4">Click "Create New Opportunity" to get started and find volunteers.</p>
-                                <Button>
-                                    <PlusCircle className="mr-2 h-4 w-4" />
-                                    Create First Opportunity
+                                <Button asChild>
+                                     <Link href="/organization/opportunities/create">
+                                        <PlusCircle className="mr-2 h-4 w-4" />
+                                        Create First Opportunity
+                                    </Link>
                                 </Button>
                             </div>
                         )}

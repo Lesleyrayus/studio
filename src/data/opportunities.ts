@@ -17,6 +17,7 @@ export const mockOpportunities: Opportunity[] = [
   { id: 4, title: 'Hospital Front Desk', organization: 'City General Hospital', location: 'Sunnyvale', description: 'Welcome patients and visitors, provide information, and assist with administrative tasks.', category: 'Healthcare' },
   { id: 5, title: 'Art Workshop Facilitator', organization: 'Creative Minds Center', location: 'San Francisco', description: 'Assist in running art workshops for children and adults in our community art center.', category: 'Arts & Culture' },
   { id: 6, title: 'Tree Planting Event', organization: 'Urban Forest Project', location: 'Oakland', description: 'Join us for a day of planting trees in city parks to improve our urban canopy.', category: 'Environment' },
+  { id: 7, title: 'Coding Bootcamp Instructor', organization: 'Future Leaders Initiative', location: 'Oakland', description: 'Teach the next generation of software developers in our intensive coding bootcamp.', category: 'Education' },
 ];
 
 export const categoryIcons: Record<Opportunity['category'], ComponentType<{ className: string }>> = {
