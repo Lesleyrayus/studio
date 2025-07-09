@@ -1,8 +1,8 @@
+import * as React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { HeartHandshake, Sprout, GraduationCap, Dog, Paintbrush, MapPin } from 'lucide-react';
-import type { ReactElement } from 'react';
 
 export interface Opportunity {
   id: number;
@@ -13,7 +13,7 @@ export interface Opportunity {
   category: 'Healthcare' | 'Environment' | 'Education' | 'Animal Welfare' | 'Arts & Culture';
 }
 
-const categoryIcons: Record<Opportunity['category'], ReactElement> = {
+const categoryIcons: Record<Opportunity['category'], React.ReactElement> = {
   'Healthcare': <HeartHandshake className="w-4 h-4" />,
   'Environment': <Sprout className="w-4 h-4" />,
   'Education': <GraduationCap className="w-4 h-4" />,
@@ -21,7 +21,11 @@ const categoryIcons: Record<Opportunity['category'], ReactElement> = {
   'Arts & Culture': <Paintbrush className="w-4 h-4" />,
 };
 
-export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
+interface OpportunityCardProps {
+  opportunity: Opportunity;
+}
+
+export const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity }) => {
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
@@ -45,7 +49,8 @@ export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
         <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
           Learn More
         </Button>
-      </Footer>
+      </CardFooter>
     </Card>
   );
-}
+};
+OpportunityCard.displayName = 'OpportunityCard';
