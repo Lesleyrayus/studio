@@ -1,6 +1,7 @@
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { mockOpportunities, categoryIcons, type Opportunity } from '@/data/opportunities';
+import { mockApplicants } from '@/data/applicants';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +16,8 @@ export default function OpportunityDetailPage({ params }: { params: { id: string
   if (!opportunity) {
     notFound();
   }
+  
+  const applicantCount = mockApplicants.filter(app => app.opportunityId === opportunity.id).length;
 
   const Icon = categoryIcons[opportunity.category];
 
@@ -81,9 +84,11 @@ export default function OpportunityDetailPage({ params }: { params: { id: string
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground">Here you can edit your listing and view applicants.</p>
-                   <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-                    <Users className="mr-2 h-4 w-4" />
-                    View Applicants (15)
+                   <Button asChild size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                    <Link href={`/organization/opportunities/${opportunity.id}/applicants`}>
+                        <Users className="mr-2 h-4 w-4" />
+                        View Applicants ({applicantCount})
+                    </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="w-full">
                     {/* The edit page doesn't exist yet, but this links to the create page as a placeholder */}
