@@ -45,7 +45,7 @@ export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
         <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
           Learn More
         </Button>
-      </CardFooter>
+      </Footer>
     </Card>
   );
 }
