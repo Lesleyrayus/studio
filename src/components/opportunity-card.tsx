@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { HeartHand, Sprout, GraduationCap, Dog, Paintbrush, MapPin } from 'lucide-react';
+import { HeartHandshake, Sprout, GraduationCap, Dog, Paintbrush, MapPin } from 'lucide-react';
 import type { ReactElement } from 'react';
 
 export interface Opportunity {
@@ -14,7 +14,7 @@ export interface Opportunity {
 }
 
 const categoryIcons: Record<Opportunity['category'], ReactElement> = {
-  'Healthcare': <HeartHand className="w-4 h-4" />,
+  'Healthcare': <HeartHandshake className="w-4 h-4" />,
   'Environment': <Sprout className="w-4 h-4" />,
   'Education': <GraduationCap className="w-4 h-4" />,
   'Animal Welfare': <Dog className="w-4 h-4" />,
