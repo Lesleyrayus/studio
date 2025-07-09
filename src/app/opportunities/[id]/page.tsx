@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MapPin, Calendar, Clock, Users, Share2 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function OpportunityDetailPage({ params }: { params: { id: string } }) {
   const opportunity = mockOpportunities.find(op => op.id === parseInt(params.id, 10));
@@ -80,7 +81,9 @@ export default function OpportunityDetailPage({ params }: { params: { id: string
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground">Make a difference in your community by joining this initiative.</p>
-                  <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">Apply Now</Button>
+                  <Button asChild size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                    <Link href={`/opportunities/${opportunity.id}/apply`}>Apply Now</Link>
+                  </Button>
                   <Button size="lg" variant="outline" className="w-full">
                     <Share2 className="mr-2 h-4 w-4" />
                     Share
