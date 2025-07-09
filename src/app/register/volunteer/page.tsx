@@ -40,9 +40,9 @@ export default function VolunteerRegistrationPage() {
     console.log(values)
     toast({
       title: "Registration Successful!",
-      description: "Welcome to HelpingHands. You can now log in.",
+      description: "Welcome to HelpingHands! Redirecting to your dashboard.",
     })
-    router.push('/login');
+    router.push('/volunteer/dashboard');
   }
 
   return (
