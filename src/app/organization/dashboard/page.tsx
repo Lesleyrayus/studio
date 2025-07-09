@@ -3,7 +3,22 @@ import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { OpportunityCard, type Opportunity } from '@/components/opportunity-card';
-import { PlusCircle, List, CheckCircle, Users, UserPlus } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { MenuBar, MenuBarContent, MenuBarItem, MenuBarMenu, MenuBarSeparator, MenuBarTrigger } from "@/components/ui/menubar";
+import Link from 'next/link';
+import {
+    PlusCircle,
+    List,
+    CheckCircle,
+    Users,
+    UserPlus,
+    Search,
+    Bell,
+    MessageSquare,
+    UserCircle,
+    Settings,
+    LogOut
+} from 'lucide-react';
 
 const organizationOpportunities: Opportunity[] = [
     { id: 2, title: 'Youth Mentor', organization: 'Future Leaders Initiative', location: 'Oakland', description: 'Guide and support high school students, providing academic help and career advice.', category: 'Education' },
@@ -18,13 +33,50 @@ export default function OrganizationDashboardPage() {
                 <div className="container mx-auto">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
                         <div>
-                            <h1 className="text-3xl font-bold font-headline">Organization Dashboard</h1>
+                            <h1 className="text-3xl font-bold font-headline">Dashboard</h1>
                             <p className="text-muted-foreground">Welcome back, Future Leaders Initiative!</p>
                         </div>
-                        <Button>
-                            <PlusCircle className="mr-2 h-4 w-4" />
-                            Create New Opportunity
-                        </Button>
+                        <div className="flex items-center gap-2">
+                             <div className="relative">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                                <Input placeholder="Search volunteers by skill..." className="pl-10 w-full sm:w-64" />
+                            </div>
+                            <MenuBar>
+                                <MenuBarMenu>
+                                    <MenuBarTrigger asChild>
+                                    <Button variant="outline" size="icon">
+                                        <UserCircle className="h-5 w-5" />
+                                    </Button>
+                                    </MenuBarTrigger>
+                                    <MenuBarContent align="end">
+                                        <MenuBarItem>
+                                            <UserCircle className="mr-2" />
+                                            <span>My Profile</span>
+                                        </MenuBarItem>
+                                        <MenuBarItem>
+                                            <Bell className="mr-2" />
+                                            <span>Notifications</span>
+                                        </MenuBarItem>
+                                        <MenuBarItem>
+                                            <MessageSquare className="mr-2" />
+                                            <span>Chat</span>
+                                        </MenuBarItem>
+                                        <MenuBarSeparator />
+                                         <MenuBarItem>
+                                            <Settings className="mr-2" />
+                                            <span>Settings</span>
+                                        </MenuBarItem>
+                                        <MenuBarSeparator />
+                                        <MenuBarItem asChild>
+                                            <Link href="/login">
+                                                <LogOut className="mr-2" />
+                                                <span>Log Out</span>
+                                            </Link>
+                                        </MenuBarItem>
+                                    </MenuBarContent>
+                                </MenuBarMenu>
+                            </MenuBar>
+                        </div>
                     </div>
 
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
@@ -71,7 +123,14 @@ export default function OrganizationDashboardPage() {
                     </div>
 
                     <div>
-                        <h2 className="text-2xl font-bold font-headline mb-4">Your Posted Opportunities</h2>
+                        <div className="flex items-center justify-between mb-4">
+                             <h2 className="text-2xl font-bold font-headline">Your Posted Opportunities</h2>
+                             <Button>
+                                <PlusCircle className="mr-2 h-4 w-4" />
+                                Create New Opportunity
+                            </Button>
+                        </div>
+                       
                         {organizationOpportunities.length > 0 ? (
                             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                                 {organizationOpportunities.map((opp) => (
