@@ -25,7 +25,7 @@ interface OpportunityCardProps {
   opportunity: Opportunity;
 }
 
-export const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity }) => {
+export function OpportunityCard({ opportunity }: OpportunityCardProps) {
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
@@ -52,5 +52,4 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity })
       </CardFooter>
     </Card>
   );
-};
-OpportunityCard.displayName = 'OpportunityCard';
+}
