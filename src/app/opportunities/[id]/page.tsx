@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MapPin, Calendar, Clock, Users, Share2 } from 'lucide-react';
+import { MapPin, Calendar, Clock, Users, Share2, Edit } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -75,14 +75,22 @@ export default function OpportunityDetailPage({ params }: { params: { id: string
               </Card>
             </div>
             <div className="lg:col-span-1">
-              <Card>
+               <Card>
                 <CardHeader>
-                  <CardTitle>Ready to Volunteer?</CardTitle>
+                  <CardTitle>Manage Opportunity</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-muted-foreground">Make a difference in your community by joining this initiative.</p>
-                  <Button asChild size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-                    <Link href={`/opportunities/${opportunity.id}/apply`}>Apply Now</Link>
+                  <p className="text-muted-foreground">Here you can edit your listing and view applicants.</p>
+                   <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                    <Users className="mr-2 h-4 w-4" />
+                    View Applicants (15)
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="w-full">
+                    {/* The edit page doesn't exist yet, but this links to the create page as a placeholder */}
+                    <Link href={`/organization/opportunities/create`}> 
+                        <Edit className="mr-2 h-4 w-4" />
+                        Edit Opportunity
+                    </Link>
                   </Button>
                   <Button size="lg" variant="outline" className="w-full">
                     <Share2 className="mr-2 h-4 w-4" />
