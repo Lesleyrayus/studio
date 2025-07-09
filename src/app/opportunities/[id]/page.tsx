@@ -1,12 +1,12 @@
+
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { mockOpportunities, categoryIcons, type Opportunity } from '@/data/opportunities';
-import { mockApplicants } from '@/data/applicants';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MapPin, Calendar, Clock, Users, Share2, Edit } from 'lucide-react';
+import { MapPin, Calendar, Clock, Users, Share2, Heart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -17,8 +17,6 @@ export default function OpportunityDetailPage({ params }: { params: { id: string
     notFound();
   }
   
-  const applicantCount = mockApplicants.filter(app => app.opportunityId === opportunity.id).length;
-
   const Icon = categoryIcons[opportunity.category];
 
   return (
@@ -77,30 +75,38 @@ export default function OpportunityDetailPage({ params }: { params: { id: string
                 </CardContent>
               </Card>
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 space-y-8">
                <Card>
                 <CardHeader>
-                  <CardTitle>Manage Opportunity</CardTitle>
+                  <CardTitle className="font-headline">Ready to help?</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground">Here you can edit your listing and view applicants.</p>
-                   <Button asChild size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-                    <Link href={`/organization/opportunities/${opportunity.id}/applicants`}>
-                        <Users className="mr-2 h-4 w-4" />
-                        View Applicants ({applicantCount})
+                <CardContent className="flex flex-col gap-3">
+                  <p className="text-sm text-muted-foreground">Apply now to start making a difference in your community.</p>
+                  <Button asChild size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                    <Link href={`/opportunities/${opportunity.id}/apply`}>
+                        Apply Now
                     </Link>
                   </Button>
-                  <Button asChild size="lg" variant="outline" className="w-full">
-                    {/* The edit page doesn't exist yet, but this links to the create page as a placeholder */}
-                    <Link href={`/organization/opportunities/create`}> 
-                        <Edit className="mr-2 h-4 w-4" />
-                        Edit Opportunity
-                    </Link>
-                  </Button>
-                  <Button size="lg" variant="outline" className="w-full">
-                    <Share2 className="mr-2 h-4 w-4" />
-                    Share
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" className="w-full">
+                        <Heart className="mr-2 h-4 w-4" />
+                        Save for Later
+                    </Button>
+                     <Button variant="outline" className="w-full">
+                        <Share2 className="mr-2 h-4 w-4" />
+                        Share
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+               <Card>
+                <CardHeader>
+                    <CardTitle className="font-headline text-xl">About {opportunity.organization}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                        The {opportunity.organization} is dedicated to making a positive impact. Join us in our mission to build a better community.
+                    </p>
                 </CardContent>
               </Card>
             </div>
