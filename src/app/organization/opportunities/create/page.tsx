@@ -24,6 +24,7 @@ const formSchema = z.object({
   category: z.enum(['Healthcare', 'Environment', 'Education', 'Animal Welfare', 'Arts & Culture'], {
     required_error: "You need to select a category.",
   }),
+  photo: z.any().optional(),
 })
 
 const categories: { value: Opportunity['category']; label: string }[] = [
@@ -129,6 +130,26 @@ export default function CreateOpportunityPage() {
                       <FormLabel>Description</FormLabel>
                       <FormControl>
                         <Textarea placeholder="Describe the role, responsibilities, and impact..." className="min-h-[120px]" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="photo"
+                  render={({ field: { value, onChange, ...fieldProps } }) => (
+                    <FormItem>
+                      <FormLabel>Opportunity Photo</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...fieldProps}
+                          type="file"
+                          accept="image/*"
+                          onChange={(event) =>
+                            onChange(event.target.files && event.target.files[0])
+                          }
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
