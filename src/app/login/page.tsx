@@ -1,8 +1,10 @@
 "use client"
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -10,12 +12,16 @@ import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [userType, setUserType] = useState<'volunteer' | 'organization'>('volunteer');
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
     // In a real app, you would handle authentication here.
-    // For this prototype, we'll simply redirect to the dashboard.
-    router.push('/organization/dashboard');
+    if (userType === 'organization') {
+        router.push('/organization/dashboard');
+    } else {
+        router.push('/volunteer/dashboard');
+    }
   };
 
   return (
@@ -28,7 +34,36 @@ export default function LoginPage() {
             <CardDescription>Log in to your HelpingHands account.</CardDescription>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4" onSubmit={handleLogin}>
+            <form className="space-y-6" onSubmit={handleLogin}>
+               <RadioGroup
+                defaultValue="volunteer"
+                className="grid grid-cols-2 gap-4"
+                value={userType}
+                onValueChange={(value: 'volunteer' | 'organization') => setUserType(value)}
+              >
+                <div>
+                  <RadioGroupItem value="volunteer" id="volunteer" className="peer sr-only" />
+                  <Label
+                    htmlFor="volunteer"
+                    className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 text-center hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  >
+                    I'm a Volunteer
+                  </Label>
+                </div>
+                <div>
+                  <RadioGroupItem
+                    value="organization"
+                    id="organization"
+                    className="peer sr-only"
+                  />
+                  <Label
+                    htmlFor="organization"
+                    className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 text-center hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  >
+                    I'm an Organization
+                  </Label>
+                </div>
+              </RadioGroup>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="m@example.com" required />
