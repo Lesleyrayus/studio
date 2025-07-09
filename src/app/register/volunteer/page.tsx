@@ -12,6 +12,7 @@ import Link from "next/link"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   fullName: z.string().min(2, { message: "Full name must be at least 2 characters." }),
@@ -23,6 +24,7 @@ const formSchema = z.object({
 
 export default function VolunteerRegistrationPage() {
   const { toast } = useToast()
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,8 +42,7 @@ export default function VolunteerRegistrationPage() {
       title: "Registration Successful!",
       description: "Welcome to HelpingHands. You can now log in.",
     })
-    // Here you would typically send the data to your backend
-    form.reset();
+    router.push('/login');
   }
 
   return (

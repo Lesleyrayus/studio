@@ -12,6 +12,7 @@ import Link from "next/link"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   organizationName: z.string().min(2, { message: "Organization name must be at least 2 characters." }),
@@ -23,6 +24,7 @@ const formSchema = z.object({
 
 export default function OrganizationRegistrationPage() {
   const { toast } = useToast()
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,7 +42,7 @@ export default function OrganizationRegistrationPage() {
       title: "Registration Successful!",
       description: "Welcome to HelpingHands. You can now log in and post opportunities.",
     })
-    form.reset();
+    router.push('/login');
   }
 
   return (
