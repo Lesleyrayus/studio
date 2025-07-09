@@ -2,37 +2,24 @@ import * as React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { HeartHandshake, Sprout, GraduationCap, Dog, Paintbrush, MapPin } from 'lucide-react';
-
-export interface Opportunity {
-  id: number;
-  title: string;
-  organization: string;
-  location: string;
-  description: string;
-  category: 'Healthcare' | 'Environment' | 'Education' | 'Animal Welfare' | 'Arts & Culture';
-}
-
-const categoryIcons: Record<Opportunity['category'], React.ReactElement> = {
-  'Healthcare': <HeartHandshake className="w-4 h-4" />,
-  'Environment': <Sprout className="w-4 h-4" />,
-  'Education': <GraduationCap className="w-4 h-4" />,
-  'Animal Welfare': <Dog className="w-4 h-4" />,
-  'Arts & Culture': <Paintbrush className="w-4 h-4" />,
-};
+import { MapPin } from 'lucide-react';
+import type { Opportunity } from '@/data/opportunities';
+import { categoryIcons } from '@/data/opportunities';
+import Link from 'next/link';
 
 interface OpportunityCardProps {
   opportunity: Opportunity;
 }
 
 export function OpportunityCard({ opportunity }: OpportunityCardProps) {
+  const Icon = categoryIcons[opportunity.category];
   return (
     <Card className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
       <CardHeader>
         <div className="flex justify-between items-start gap-4">
           <CardTitle className="text-xl font-headline">{opportunity.title}</CardTitle>
           <Badge variant="secondary" className="flex items-center gap-1.5 shrink-0">
-            {categoryIcons[opportunity.category]}
+            <Icon className="w-4 h-4" />
             {opportunity.category}
           </Badge>
         </div>
@@ -46,8 +33,10 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
           <MapPin className="w-4 h-4" />
           <span>{opportunity.location}</span>
         </div>
-        <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
-          Learn More
+        <Button asChild variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
+          <Link href={`/opportunities/${opportunity.id}`}>
+            Learn More
+          </Link>
         </Button>
       </CardFooter>
     </Card>
