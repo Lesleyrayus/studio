@@ -40,9 +40,9 @@ export default function OrganizationRegistrationPage() {
     console.log(values)
     toast({
       title: "Registration Successful!",
-      description: "Welcome to HelpingHands. You can now log in and post opportunities.",
+      description: "Welcome to HelpingHands. Redirecting to your dashboard.",
     })
-    router.push('/login');
+    router.push('/organization/dashboard');
   }
 
   return (
