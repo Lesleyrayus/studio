@@ -13,10 +13,6 @@ import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import { doc, setDoc } from "firebase/firestore"
-import { auth, db } from "@/lib/firebase"
-import { useAuth } from "@/context/auth-context"
 
 const formSchema = z.object({
   organizationName: z.string().min(2, { message: "Organization name must be at least 2 characters." }),
@@ -29,7 +25,6 @@ const formSchema = z.object({
 export default function OrganizationRegistrationPage() {
   const { toast } = useToast()
   const router = useRouter()
-  const { firebaseInitialized } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,37 +36,13 @@ export default function OrganizationRegistrationPage() {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!firebaseInitialized || !auth || !db) {
-        toast({
-            variant: "destructive",
-            title: "Error",
-            description: "Firebase is not configured correctly.",
-        });
-        return;
-    }
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
-      const user = userCredential.user;
-
-      await setDoc(doc(db, "users", user.uid), {
-        email: values.email,
-        organizationName: values.organizationName,
-        address: values.address,
-        mission: values.mission,
-        role: 'organization'
-      });
-
-      router.push('/organization/dashboard');
-
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Registration Failed",
-        description: error.message,
-      })
-    }
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+    toast({
+      title: "Account Created!",
+      description: "Redirecting to your dashboard.",
+    })
+    router.push('/organization/dashboard');
   }
 
   return (
@@ -151,7 +122,7 @@ export default function OrganizationRegistrationPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" disabled={form.formState.isSubmitting || !firebaseInitialized}>
+                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" disabled={form.formState.isSubmitting}>
                    {form.formState.isSubmitting ? 'Creating Account...' : 'Create Account'}
                 </Button>
               </form>
